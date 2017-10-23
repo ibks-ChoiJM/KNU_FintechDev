@@ -8,12 +8,9 @@
     android:orientation="vertical"
     >
 
-    <Button
-        android:id="@+id/btn_QR"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/btn_qr"/>
+    <!-- QR 코드 촬영 버튼 추가 -->
+
+
 
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -126,13 +123,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_pwd" />
 
+                <!-- 비밀번호 속성, 최대길이 -->
                 <EditText
                     android:id="@+id/edit_Pwd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="numberPassword"
-                    android:maxLength="6"
                     android:gravity="center_horizontal"
                     />
 

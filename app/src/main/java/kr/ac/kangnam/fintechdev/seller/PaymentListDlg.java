@@ -1,6 +1,5 @@
 package kr.ac.kangnam.fintechdev.seller;
 
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -162,16 +160,7 @@ public class PaymentListDlg extends Dialog {
                 //i : 년도
                 //i2 : 월 (0 ~ 11이어서 +1을 해줘야함)
                 //i2 : 일
-                DatePickerDialog pickerDialog = new DatePickerDialog(context,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                                String sDate = String.format("%d-%02d-%02d", i, i1 + 1, i2);
-                                btnDate.setText(sDate);
-                            }
-                        }, nYear, nMonth, nDay);
-
-                pickerDialog.show();
+                //(1)
             }
         });
 
@@ -213,17 +202,12 @@ public class PaymentListDlg extends Dialog {
         listAdapter.notifyDataSetChanged();
         list.scrollTo(0,0);
 
-        //총 금액 표사
-        long lTotal = 0;
-        for(int i = 0; i < arrayPayment.size(); i++)
-        {
-            lTotal += arrayPayment.get(i).getPrdPrice();
-        }
+        //(2)
+        //총 금액 계산
+        //총 금액 표시
 
-        textListTitle.setText(
-                String.format(context.getString(R.string.title_payment_state), btnDate.getText().toString()));
-        textTotalPrice.setText(
-                String.format(context.getString(R.string.text_total_price), lTotal));
+        //판매 거래현환 날짜 표시
+
     }
 
     public class PaymentListAdapter extends BaseAdapter
@@ -260,12 +244,9 @@ public class PaymentListDlg extends Dialog {
                 view = inflater.inflate(R.layout.item_payment, null, false);
             }
 
-            //항목의 값을 셋팅팅
-           TextView textDate = view.findViewById(R.id.text_Date);
-            TextView textPrice = view.findViewById(R.id.text_Price);
-
-            textDate.setText(arrayPayment.get(i).getPaymentAt());
-            textPrice.setText(String.valueOf(arrayPayment.get(i).getPrdPrice()));
+            //(3)
+            //뷰 객체 받아오기 (날짜, 가격)
+            //항목의 값을 셋팅팅 (날짜, 가격)
 
 
             return view;

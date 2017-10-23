@@ -1,13 +1,10 @@
 package kr.ac.kangnam.fintechdev.seller;
 
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,12 +50,12 @@ public class SellerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_seller);
 
         //뷰에 대한 객체 받아오기
-        imgQR = (ImageView) findViewById(R.id.img_QR);
-        tvPrice = (TextView) findViewById(R.id.text_Price);;
-        tvPrdName = (TextView) findViewById(R.id.text_Product);;
-        tvSellerName = (TextView) findViewById(R.id.text_Seller);;
-        tvAcoountNum = (TextView) findViewById(R.id.text_Account_Num);;
-        btnPaymentList = (Button) findViewById(R.id.btn_Payment_List);
+//        imgQR = (ImageView) findViewById(R.id.img_QR);
+//        tvPrice = (TextView) findViewById(R.id.text_Price);;
+//        tvPrdName = (TextView) findViewById(R.id.text_Product);;
+//        tvSellerName = (TextView) findViewById(R.id.text_Seller);;
+//        tvAcoountNum = (TextView) findViewById(R.id.text_Account_Num);;
+//        btnPaymentList = (Button) findViewById(R.id.btn_Payment_List);
 
 
         /*
@@ -86,14 +83,7 @@ public class SellerActivity extends AppCompatActivity {
         startServer();
 
         //결재 내역리스트 버튼 연결
-        btnPaymentList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //결재 내역보기
-                showPaymentList();
-            }
-        });
+        //(10)
     }
 
     @Override
@@ -153,7 +143,7 @@ public class SellerActivity extends AppCompatActivity {
             @Override
             public void onConnect() {
                 //소켓이 연결 되었다면 사용자 정보 요청
-                reqGetSellerInfo();
+                //(1)
             }
 
             @Override
@@ -201,7 +191,7 @@ public class SellerActivity extends AppCompatActivity {
                     PaymentResultDto paymentResultDto = gson.fromJson(data, PaymentResultDto.class);
 
                     //결제정보 보여주기
-                    showPaymentComplete(paymentResultDto);
+                    //(7)
                 }
             }
 
@@ -256,27 +246,20 @@ public class SellerActivity extends AppCompatActivity {
         if(sellerInfo == null
                 || TextUtils.isEmpty(sellerInfo.getSellerName()) == true)
         {
-            //판매자 정보 등록 팝업 생성
-            SellerInfoDlg dlg = new SellerInfoDlg(this);
-
-            //판매자 입력 정보 받아오기
-            dlg.setOnSellerInfoListener(new SellerInfoDlg.OnSellerInfoListener() {
-                @Override
-                public void onSellerInfo(int nSellerNum, String sSellerName, String sPhoneNum) {
-                    //판매자 등록 요청
-                    reqSetSellerInfo(nSellerNum, sSellerName, sPhoneNum);
-                }
-            });
-
-
-            dlg.show();
+            /*
+            판매자 정보 등록 팝업 생성
+            판매자 입력 정보 받아오기
+            판매자 등록 요청
+            */
+            //(2)
         }
         else
         {
+
             //멤버변수 판매자 정보 셋팅
             this.sellerInfo = sellerInfo;
             //상품 정보 요청
-            reqGetPrdInfo();
+            //(3)
         }
 
     }
@@ -289,16 +272,16 @@ public class SellerActivity extends AppCompatActivity {
         }
 
         //싱픔정보 셋팅
-        tvPrice.setText(String.valueOf(prdInfo.getPrdPrice()));
-        tvPrdName.setText(prdInfo.getPrdName());
-        tvSellerName.setText(prdInfo.getSellerName());
-        tvAcoountNum.setText(prdInfo.getQrId());
+        //(5)
+        //가격정보
+        //상품이름
+        //판매자이름
+        //계좌번호(QR id)
 
+
+        //(6)
         //QR코드 생성
-        Bitmap bmpQR = getQRcode();
-
         //QR코드 이미지 셋팅
-        imgQR.setImageBitmap(bmpQR);
     }
 
     private Bitmap getQRcode()
@@ -335,31 +318,17 @@ public class SellerActivity extends AppCompatActivity {
 
 
         //노출될 결제 정보 셋팅
-        String sPayment = String.format("입금 : %d\n누계 : %d", paymentResultDto.getPrdPrice(), paymentResultDto.getTotalPrice());
+        //(8)
 
         //결제 완료를 알려주기 위한 기본 팝업 노출
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-        alertDialogBuilder
-                .setMessage(sPayment)
-                .setCancelable(false)
-                .setPositiveButton("확인",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(
-                                    DialogInterface dialog, int id) {
-
-                            }
-                        });
-        alertDialogBuilder.show();
+        //(9)
 
     }
 
     private void showPaymentList()
     {
         //결제내역 팝업 노출
-        PaymentListDlg dlg = new PaymentListDlg(this);
-        dlg.setClientSocketAdapter(clientAdapter);
-        dlg.show();
+        //(11)
     }
 
     private void reqGetSellerInfo()
@@ -394,12 +363,13 @@ public class SellerActivity extends AppCompatActivity {
     private void reqSetPrdInfo()
     {
         //상품정보 객체 생성
+        //(4)
         PrdInfoDto prdSetInfo = new PrdInfoDto();
         prdSetInfo.setSellerId(sellerInfo.getSellerId());
         prdSetInfo.setSellerName(sellerInfo.getSellerName());
         prdSetInfo.setQrId(sellerInfo.getQrId());
-        prdSetInfo.setPrdName("배추");
-        prdSetInfo.setPrdPrice(1000);
+//        prdSetInfo.setPrdName("배추");
+//        prdSetInfo.setPrdPrice(1000);
 
         //JSON 생성
         Gson gson = new Gson();

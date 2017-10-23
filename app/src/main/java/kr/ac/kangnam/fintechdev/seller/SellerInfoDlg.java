@@ -63,31 +63,20 @@ public class SellerInfoDlg extends Dialog {
             public void onClick(View view) {
 
                 //빈 정보 있는 예외 처리
-                if(TextUtils.isEmpty(editSellerNum.toString()) == true)
-                {
-                    Toast.makeText(getContext(), R.string.msg_input_seller_num, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(TextUtils.isEmpty(editSeller.toString()) == true)
-                {
-                    Toast.makeText(getContext(), R.string.msg_input_seller_name, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(TextUtils.isEmpty(editPhoneNum.toString()) == true)
-                {
-                    Toast.makeText(getContext(), R.string.msg_input_phone_num, Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                //(1)
+                //판매자 번호 미입력
+                //판매자 이름 미입력
+                //핸드폰 번호 미입력
 
                 //리스너가 등록되어 있다면 등록 정보 보냄
-                if(onSellerInfoListener != null)
-                {
-                    onSellerInfoListener.onSellerInfo(
-                            Integer.valueOf(editSellerNum.getText().toString()),
-                            editSeller.getText().toString().toString(),
-                            editPhoneNum.getText().toString().toString()
-                    );
-                }
+//                if(onSellerInfoListener != null)
+//                {
+//                    onSellerInfoListener.onSellerInfo(
+//                            Integer.valueOf(editSellerNum.getText().toString()),
+//                            editSeller.getText().toString().toString(),
+//                            editPhoneNum.getText().toString().toString()
+//                    );
+//                }
 
                 dismiss();
             }

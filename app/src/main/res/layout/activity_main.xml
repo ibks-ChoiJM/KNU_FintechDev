@@ -12,21 +12,6 @@
         android:orientation="horizontal"
         android:layout_centerInParent="true">
 
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:id="@+id/btn_Mode_Seller"
-            android:text="@string/btn_mode_seller"
-            android:textSize="30sp"
-            android:textStyle="bold"/>
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:id="@+id/btn_Mode_Buyer"
-            android:text="@string/btn_mode_buyer"
-            android:textSize="30sp"
-            android:textStyle="bold"/>
 
     </LinearLayout>
 

@@ -59,14 +59,14 @@ public class BuyerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer);
 
-        btnQR = (Button) findViewById(R.id.btn_QR);
-        btnPayment = (Button) findViewById(R.id.btn_Payment);
-        btnOk = (Button) findViewById(R.id.btn_Ok);
-        tvPrice = (TextView) findViewById(R.id.text_Price);;
-        tvPrdName = (TextView) findViewById(R.id.text_Product);;
-        tvSellerName = (TextView) findViewById(R.id.text_Seller);;
-        tvAcoountNum = (TextView) findViewById(R.id.text_Account_Num);;
-        edPwd = (EditText) findViewById(R.id.edit_Pwd);
+//        btnQR = (Button) findViewById(R.id.btn_QR);
+//        btnPayment = (Button) findViewById(R.id.btn_Payment);
+//        btnOk = (Button) findViewById(R.id.btn_Ok);
+//        tvPrice = (TextView) findViewById(R.id.text_Price);;
+//        tvPrdName = (TextView) findViewById(R.id.text_Product);;
+//        tvSellerName = (TextView) findViewById(R.id.text_Seller);;
+//        tvAcoountNum = (TextView) findViewById(R.id.text_Account_Num);;
+//        edPwd = (EditText) findViewById(R.id.edit_Pwd);
 
         layoutComplete = (LinearLayout) findViewById(R.id.layout_Payment_Complete);
         layoutPwd = (LinearLayout) findViewById(R.id.layout_Input_Pwd);
@@ -87,39 +87,19 @@ public class BuyerActivity extends AppCompatActivity {
         }
 
         //QR 코드 인식 버튼 눌렀을때
-        btnQR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //QR코드 카메라 호출
-                new IntentIntegrator(BuyerActivity.this).initiateScan();
-
-            }
-        });
+        //(1)
+        //QR코드 카메라 호출
 
         //결제 버튼 눌렀을때
-        btnPayment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //결제 요청
-                reqPayment();
-            }
-        });
+        //결제 요청
+        //(5)
 
         //결제 완료 후 노출
         //확인 버튼 눌렀을때 화면 초기화
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        //데이터 초기화
+        //(9)
 
-                //데이터 초기화
-                prdInfo = null;
-                isPaymentComplete = false;
-                setViewPrdInfo();
-            }
-        });
-
-        setViewPrdInfo();
+        //setViewPrdInfo();
     }
 
     @Override
@@ -150,9 +130,10 @@ public class BuyerActivity extends AppCompatActivity {
                 }
 
                 //서버 접속
-                sQRid = qrInfo.getQrId();
-                sServerIPAddress = qrInfo.getIp();
-                connectServer();
+                //(2)
+//                sQRid = qrInfo.getQrId();
+//                sServerIPAddress = qrInfo.getIp();
+//                connectServer();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -203,6 +184,8 @@ public class BuyerActivity extends AppCompatActivity {
         clientAdapter.setConnectCallback(new SocketClientAdapter.OnSocketConnectCallback() {
             @Override
             public void onConnect() {
+                //상품정보 받아오기
+                //(3)
                 reqGetPrdInfo();
             }
 
@@ -235,9 +218,10 @@ public class BuyerActivity extends AppCompatActivity {
                 //결제 완료 정보 받아오기
                 else if(type.equalsIgnoreCase(Define.REQ_TYPE_SET_PAYMENT) == true)
                 {
-                    isPaymentComplete = true;
+                    //(8)
+                    //결제 상태값 완료상태로 변경
                     //결제 완료 화면 보여주기
-                    setViewPrdInfo();
+
                 }
 
             }
@@ -289,26 +273,24 @@ public class BuyerActivity extends AppCompatActivity {
         }
         else
         {
-            tvPrice.setText(String.valueOf(prdInfo.getPrdPrice()));
-            tvPrdName.setText(prdInfo.getPrdName());
-            tvSellerName.setText(prdInfo.getSellerName());
-            tvAcoountNum.setText(prdInfo.getQrId());
+            //(4)
+            //가격정보
+            //상품명
+            //판매자 이름
+            //계좌번호
 
             //결제 완료 화면
             if(isPaymentComplete == true)
             {
-                btnOk.setVisibility(View.VISIBLE);
-                btnPayment.setVisibility(View.GONE);
-                layoutComplete.setVisibility(View.VISIBLE);
-                layoutPwd.setVisibility(View.GONE);
+                //확인버튼 노출, 결제 버튼 미노출
+                //완료 텍스트 노출, 비밀번호 입력 화면 미노출
+
             }
             //결제 화면
             else
             {
-                btnOk.setVisibility(View.GONE);
-                btnPayment.setVisibility(View.VISIBLE);
-                layoutComplete.setVisibility(View.GONE);
-                layoutPwd.setVisibility(View.VISIBLE);
+                //확인버튼 미노출, 결제 버튼 노출
+                //완료 텍스트 미노출, 비밀번호 입력 화면 노출
             }
         }
 
@@ -323,22 +305,19 @@ public class BuyerActivity extends AppCompatActivity {
 
     private void reqPayment()
     {
-        //비밀번호 자리수 비교
-        if(edPwd.getText().toString().length() < 6)
-        {
-            Toast.makeText(this, R.string.msg_input_password, Toast.LENGTH_SHORT).show();
-            return;
-        }
+        //비밀번호 자리수 비교 6자리 이하일 경우
+        //(6)
 
-        // 결제 정보 셋팅
+        //결제 정보 셋팅
+        //(7)
         PaymentDto paymentDto = new PaymentDto();
-        paymentDto.setSellerId(prdInfo.getSellerId());
-        paymentDto.setQrId(prdInfo.getQrId());
-        paymentDto.setPaymentType(1);
-        paymentDto.setBuyerAccountNum("");
-        paymentDto.setPrdId(prdInfo.getPrdId());
-        paymentDto.setPrdName(prdInfo.getPrdName());
-        paymentDto.setPrdPrice(prdInfo.getPrdPrice());
+//        paymentDto.setSellerId(prdInfo.getSellerId());
+//        paymentDto.setQrId(prdInfo.getQrId());
+//        paymentDto.setPaymentType(1);
+//        paymentDto.setBuyerAccountNum("");
+//        paymentDto.setPrdId(prdInfo.getPrdId());
+//        paymentDto.setPrdName(prdInfo.getPrdName());
+//        paymentDto.setPrdPrice(prdInfo.getPrdPrice());
 
         //Json 생성
         Gson gson = new Gson();
