@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">FintechDev</string>
+
+    <string name="title_select_mode">모드 선택</string>
+    <string name="title_seller">판매자</string>
+    <string name="title_buyer">구매자</string>
+    <string name="title_payment_list">1일 판매거래 조회</string>
+    <string name="title_payment_state">%s 판매거래 현황</string>
+    <string name="title_payment_info">결제정보</string>
+
+    <string name="btn_mode_seller">판매자</string>
+    <string name="btn_mode_buyer">구매자</string>
+
+    <string name="btn_ok">확인</string>
+    <string name="btn_cancel">취소</string>
+    <string name="btn_save">저장</string>
+    <string name="btn_search">조회</string>
+    <string name="btn_qr">QR 촬영</string>
+    <string name="btn_payment">결제</string>
+    <string name="btn_payment_list">거래내역</string>
+
+    <string name="text_price">가격 :</string>
+    <string name="text_product">상품명 :</string>
+    <string name="text_seller">판매자 :</string>
+    <string name="text_account_num">계좌번호 :</string>
+    <string name="text_phone_num">전화번호 :</string>
+    <string name="text_seller_num">판매자번호 :</string>
+    <string name="text_total_price">합계금액 : %d</string>
+    <string name="text_pwd">비밀번호</string>
+    <string name="text_payment_complete">결제가\n완료되었습니다</string>
+
+    <string name="msg_input_seller_num">판매자 번호를 입력해주세요</string>
+    <string name="msg_input_seller_name">판매자 이름을 입력해주세요</string>
+    <string name="msg_input_phone_num">전화번호를 입력해주세요</string>
+    <string name="msg_need_connect_wifi">와이파이에 연결해주세요</string>
+    <string name="msg_input_password">비밀번호 6자리를 입력해주세요</string>
+
+</resources>
